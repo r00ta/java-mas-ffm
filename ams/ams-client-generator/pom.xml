@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>ams</artifactId>
+    <groupId>com.redhat.services.ffm</groupId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <artifactId>ams-client-generator</artifactId>
+  <properties>
+    <generator.output.path>.</generator.output.path>
+    <swagger-annotations-version>1.5.0</swagger-annotations-version>
+    <maven-plugin-version>1.0.0</maven-plugin-version>
+  </properties>
+
+  <dependencies>
+    <!-- dependencies are needed for the client being generated -->
+    <dependency>
+      <groupId>io.swagger</groupId>
+      <artifactId>swagger-annotations</artifactId>
+      <version>${swagger-annotations-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openapitools</groupId>
+      <artifactId>openapi-generator-maven-plugin</artifactId>
+      <version>5.4.0</version>
+    </dependency>
+  </dependencies>
+
+  <profiles>
+    <profile>
+      <id>client</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.openapitools</groupId>
+            <artifactId>openapi-generator-maven-plugin</artifactId>
+            <!-- RELEASE_VERSION -->
+            <version>5.4.0</version>
+            <!-- /RELEASE_VERSION -->
+            <executions>
+              <execution>
+                <goals>
+                  <goal>generate</goal>
+                </goals>
+                <configuration>
+                  <inputSpec>${project.basedir}/src/main/resources/openapi/openapi.json</inputSpec>
+                  <generatorName>java</generatorName>
+
+                  <generateApiTests>false</generateApiTests>
+                  <generateModelTests>false</generateModelTests>
+                  <httpUserAgent>AMS Java Client</httpUserAgent>
+                  <output>../ams-client/</output>
+                  <configOptions>
+                    <parentArtifactId>ams</parentArtifactId>
+                    <parentGroupId>com.redhat.services.ffm</parentGroupId>
+                    <parentVersion>0.0.1-SNAPSHOT</parentVersion>
+                    <projectName>ams-client</projectName>
+                    <projectDescription>Java client for AMS service.</projectDescription>
+                    <projectLicenseName>Apache V2</projectLicenseName>
+                    <sortParamsByRequiredFlag>true</sortParamsByRequiredFlag>
+                    <ensureUniqueParams>true</ensureUniqueParams>
+                    <groupId>com.redhat.services.ffm</groupId>
+                    <artifactId>ams-client</artifactId>
+                    <artifactVersion>0.0.1-SNAPSHOT</artifactVersion>
+                    <modelPackage>com.redhat.services.ffm.amsclient.models</modelPackage>
+                    <apiPackage>com.redhat.services.ffm.amsclient.api</apiPackage>
+                    <invokerPackage>com.redhat.services.ffm.amsclient</invokerPackage>
+                    <sourceFolder>src/main/java</sourceFolder>
+                    <bigDecimalAsString>false</bigDecimalAsString>
+                    <fullJavaUtil>false</fullJavaUtil>
+                    <dateLibrary>java8</dateLibrary>
+                    <sourceFolder>src/main/java</sourceFolder>
+                    <asyncNative>true</asyncNative>
+                    <serializationLibrary>jackson</serializationLibrary>
+                    <responseWrapper>CompletableFuture</responseWrapper>
+                    <library>native</library>
+                    <useRuntimeException>true</useRuntimeException>
+                  </configOptions>
+
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>
